@@ -12,7 +12,11 @@ public:
     {
         integrator = new SimTK::SemiExplicitEuler2Integrator(model.getMultibodySystem());
         integrator->setAccuracy(0.001);
-		manager.setIntegrator(integrator);
+#if OPENSIM_MAJOR_VERSION == 4
+		manager.setIntegrator(*integrator);
+#elif OPENSIM_MAJOR_VERSION == 3
+        manager.setIntegrator(integrator);
+#endif
     }
 
 	~IntegratorInjector()
